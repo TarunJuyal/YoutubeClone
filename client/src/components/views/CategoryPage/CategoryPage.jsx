@@ -114,6 +114,13 @@ function CategoryPage(props) {
       </React.Fragment>
     );
   } 
+  else if(Videos.length()===0){
+    return (
+      <div className="app ">
+        <Title level={2}>No videos of this Category</Title>
+      </div>
+    );
+  }
   else {
     return (
       <div className="app ">

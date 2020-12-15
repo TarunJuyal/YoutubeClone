@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const videoSchema = mongoose.Schema(
   {
     writer: { type: Schema.Types.ObjectId, ref: "User" },
-    title: { type: String },
+    title: { type: String},
     description: { type: String },
     privacy: { type: Number },
     filePath: { type: String },
@@ -15,6 +15,8 @@ const videoSchema = mongoose.Schema(
   },
   { timestamps: true }
 );
+videoSchema.index({ title: 'text', description: 'text' })
 
 const Video = mongoose.model("Video", videoSchema);
+Video.createIndexes();
 module.exports = { Video };

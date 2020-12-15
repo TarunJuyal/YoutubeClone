@@ -23,7 +23,12 @@ function RightMenu(props) {
 
   const handleSearch = (e) => {
     let search = e.target.value;
-    window.location.href = `/search/${search}`;
+    if(search.trim()===""){
+      alert("No data entered !!")
+    }else{
+      window.location.href = `/search/${search}`;
+    }
+    
   };
 
   if (user.userData && !user.userData.isAuth) {

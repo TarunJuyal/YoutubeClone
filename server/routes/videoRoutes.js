@@ -5,12 +5,8 @@ const { Like } = require("../models/like");
 const path = require("path");
 const multer = require("multer");
 const ffmpeg = require("fluent-ffmpeg");
-const elasticsearch = require("elasticsearch");
 const videoRoutes = express.Router();
 
-const client = new elasticsearch.Client({
-  host: "http://localhost:9200/",
-});
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -74,21 +70,6 @@ videoRoutes.post("/uploadVideo", (req, res) => {
   const video = new Video(req.body);
   video.save((err, video) => {
     if (err) return res.status(400).json({ success: false });
-    client.index(
-      {
-        index: "video",
-        id: video._id.toString(),
-        body: req.body,
-        refresh: "true",
-      },
-      function (err, resp, status) {
-        if (err) {
-          console.log("error in elastic search upload" + err);
-        } else {
-          console.log("elastic search upload success" + JSON.stringify(resp));
-        }
-      }
-    );
     return res.status(200).json({ success: true });
   });
 });
@@ -128,36 +109,10 @@ videoRoutes.post("/getSubscriptionVideos", (req, res) => {
 });
 
 videoRoutes.post("/search", (req, res) => {
-  var searchResults = [];
-  let reqbody = {
-    query: {
-      match: {
-        title: req.body.searchString,
-      },
-    },
-  };
-  client.search(
-    {
-      index: "video",
-      body: reqbody,
-      size: 100,
-    },
-    function (err, resp, status) {
-      if (err) {
-        console.log("error while getting elasticsearch" + err);
-      } else {
-        resp.hits.hits.forEach((responseVideo) => {
-          searchResults.push(responseVideo._id);
-        });
-        Video.find({ _id: { $in: searchResults } })
-          .populate("writer")
-          .exec((err, videos) => {
-            if (err) return res.status(400).send(err);
-            return res.status(200).json({ success: true, videos });
-          });
-      }
-    }
-  );
+    Video.find({"$text":{"$search":req.body.searchString}}).populate("writer").exec((err,videos)=>{
+        if (err) return res.status(400).send(err);
+        return res.status(200).json({ success: true, videos });
+    })
 });
 
 videoRoutes.post("/getLikedVideos", (req, res) => {

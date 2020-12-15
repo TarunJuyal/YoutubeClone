@@ -34,7 +34,7 @@ function Comments(props) {
       }
     });
       }else{
-        alert("comment can't be empty")
+        alert("Comment can't be empty")
       }
     }else{
       alert("login first")

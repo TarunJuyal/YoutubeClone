@@ -1,32 +1,32 @@
-import React, { useEffect, useState } from "react";
-import { withRouter, Link } from "react-router-dom";
-import { Typography, Card, Avatar, Col, Row } from "antd";
-import Axios from "axios";
+import React, { useEffect,useState } from 'react';
+import {Card,Avatar,Col,Row,Typography } from "antd";
+import axios from "axios";
 import moment from "moment";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-const { Title } = Typography;
-const { Meta } = Card;
+const {Meta}=Card;
+const {Title}=Typography;
 
-function SearchPage(props) {
-  const searchString = props.match.params.searchString;
-  const [Videos, setVideos] = useState([]);
-  useEffect(() => {
-    const searchVariable = { searchString: searchString };
-    Axios.post("/api/video/search", searchVariable).then((response) => {
-      if (response.data.success) {
-        console.log(response.data.videos);
-        setVideos(response.data.videos);
-      } else {
-        alert("failed to get search");
-      }
-    });
-  }, []);
+const MyUploadsPage = () => {
+    const user=useSelector((state)=>state.user);
+    const [Videos, setVideos] = useState([]);
+    const videoVariable = { writer: user?.userData };
+    useEffect(()=>{
+        axios.post("/api/video/getUserVideos",videoVariable).then((response) => {
+            if (response.data.success) {
+               setVideos(response.data.videos);
+            } else {
+               alert("Failed to get videos");
+            }
+        });
+    },[user?.userData?._id])
 
-  const renderCards = Videos.map((video, index) => {
+    const renderCards = Videos.map((video, index) => {
     let minutes = Math.floor(video.duration / 60);
     let seconds = Math.floor(video.duration - minutes * 60);
     return (
-      <Col key={index} lg={6} md={8} xs={24}>
+      <Col key={index}  lg={6} md={8} sm={12} xs={24} style={{marginBottom:"3vh"}}>
         <div style={{ position: "relative" }}>
           <Link to={`/video/${video._id}`}>
             <img
@@ -70,26 +70,24 @@ function SearchPage(props) {
         <br />
         <span style={{ marginLeft: "3rem" }}>{video.views} views</span> -{" "}
         <span>{moment(video.createdAt).format("MMM Do YY")}</span>
-        <br />
-        <br />
       </Col>
     );
   });
 
-  return (
-    <React.Fragment>
+  return(
+        <React.Fragment>
       <div style={{ width: "85%", margin: "3rem auto" }}>
         {Videos.length>0 && (
         <>        
-        <Title level={2}>Search Results</Title>
+        <Title level={2}>My Uploads</Title>
         <hr />
         <Row gutter={16}>{renderCards}</Row>
         </>
         )}
-        {Videos.length===0 && <Title level={1}>Ooops ..... No videos Found</Title> }
+        {Videos.length===0 && <Title level={1}>No Uploads Yet</Title> }
       </div>
     </React.Fragment>
-  );
+  )
 }
-
-export default withRouter(SearchPage);
+ 
+export default MyUploadsPage;

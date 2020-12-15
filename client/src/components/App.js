@@ -16,6 +16,7 @@ import NotFoundPage from "./views/NotFoundPage/NotFoundPage";
 import ProfilePage from "./views/ProfilePage/ProfilePage";
 import RequestPasswordChangePage from "./views/ChangePasswordPage/RequestPasswordChangePage";
 import ResetPasswordPage from "./views/ChangePasswordPage/ResetPasswordPage";
+import MyUploadsPage from "./views/MyUploads/MyUploads";
 
 function App() {
   return (
@@ -68,6 +69,11 @@ function App() {
             exact
             path="/likedVideos"
             component={Auth(LikedVideosPage, true)}
+          ></Route>
+          <Route
+            exact
+            path="/myUploads"
+            component={Auth(MyUploadsPage, true)}
           ></Route>
           <Route
             exact

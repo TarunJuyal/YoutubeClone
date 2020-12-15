@@ -55,6 +55,9 @@ function LeftMenu(props) {
         <Menu.Item key="liked">
           <Link to="/likedVideos">Liked Videos</Link>
         </Menu.Item>
+        <Menu.Item key="my-uploads">
+          <Link to="/myUploads">My Uploads</Link>
+        </Menu.Item>
       </Menu>
     );
   }
