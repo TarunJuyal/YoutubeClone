@@ -7,10 +7,11 @@ const multer = require("multer");
 const ffmpeg = require("fluent-ffmpeg");
 const videoRoutes = express.Router();
 
+console.log(path.join(__dirname));
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/");
+    cb(null, path.join(__dirname,"../../uploads"));
   },
   filename: function (req, file, cb) {
     cb(null, `${Date.now()}_${file.originalname}`);
