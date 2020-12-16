@@ -7,30 +7,32 @@ const multer = require("multer");
 const ffmpeg = require("fluent-ffmpeg");
 const videoRoutes = express.Router();
 
-console.log(path.join(__dirname));
-
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, path.join(__dirname,"../../uploads"));
+    cb(null, "uploads/");
   },
   filename: function (req, file, cb) {
     cb(null, `${Date.now()}_${file.originalname}`);
   },
+});
+
+var upload = multer({ 
+  storage: storage,
   fileFilter: function (req, file, cb) {
     const ext = path.extname(file.originalname);
     if (ext !== ".mp4") {
-      return cb(res.status(400).end("only mp4 file is allowed"), false);
+      return cb({wrongType:"Only .mp4 file type is allowed"}, false);
     }
     cb(null, true);
-  },
-});
-
-var upload = multer({ storage: storage }).single("file");
+  },}).single("file");
 
 videoRoutes.post("/uploadFile", (req, res) => {
   upload(req, res, (err) => {
+    if (err && err.wrongType) {
+      return res.json({typeConflict:true,message:err.wrongType });
+    }
     if (err) return res.json({ success: false, err });
-    return res.json({
+    return res.status(200).json({
       success: true,
       filePath: res.req.file.path,
       fileName: res.req.file.filename,
@@ -50,7 +52,7 @@ videoRoutes.post("/thumbnail", (req, res) => {
 
   ffmpeg(req.body.filePath)
     .on("filenames", function (filenames) {
-      thumbsFilePath = "uploads/thumbnails/" + filenames[0];
+      thumbsFilePath = "uploads/thumbnails/" + filenames[1];
     })
     .on("end", function () {
       return res.json({
@@ -60,7 +62,7 @@ videoRoutes.post("/thumbnail", (req, res) => {
       });
     })
     .screenshots({
-      count: 5,
+      count: 3,
       folder: "uploads/thumbnails",
       size: "320x240",
       filename: "thumbnail-%b.png",

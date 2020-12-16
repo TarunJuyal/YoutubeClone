@@ -96,11 +96,14 @@ function UploadVideoPage(props) {
         Axios.post("/api/video/thumbnail", variable).then((response) => {
           if (response.data.success) {
             setDuration(response.data.fileDuration);
+            console.log(response.data.thumbsFilePath);
             setThumbnail(response.data.thumbsFilePath);
           } else {
             alert("Failed to make thumnail");
           }
         });
+      }else if(response.data.typeConflict){
+        alert(response.data.message);
       } else {
         alert("Failed to save video");
       }
