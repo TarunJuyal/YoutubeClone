@@ -8,8 +8,8 @@ require("dotenv").config();
 
 const app = express();
 
-const dir = path.join(__dirname,"../uploads");
-const subDirectory = path.join(__dirname,"../uploads/thumbnails");
+const dir = path.join(__dirname,"/uploads");
+const subDirectory = path.join(__dirname,"/uploads/thumbnails");
 
 if (!fs.existsSync(dir)){
     console.log("created upload and thumbs folder");
