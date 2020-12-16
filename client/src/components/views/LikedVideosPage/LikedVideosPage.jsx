@@ -3,13 +3,15 @@ import { Link } from "react-router-dom";
 import { Typography, Card, Avatar, Col, Row } from "antd";
 import Axios from "axios";
 import moment from "moment";
+import { useSelector } from "react-redux";
 
 const { Title } = Typography;
 const { Meta } = Card;
 
 function LikedVideosPage() {
+  const user=useSelector((state)=>state.user);
   const [Videos, setVideos] = useState([]);
-  const variable = { userId: localStorage.getItem("userId") };
+  const variable = { userId:user?.userData?._id  };
   useEffect(() => {
     document.title = "Liked Videos";
     Axios.post("/api/video/getLikedVideos", variable).then((response) => {
@@ -19,7 +21,7 @@ function LikedVideosPage() {
         alert("Failed to get Subscribed videos");
       }
     });
-  }, [variable]);
+  }, [user?.userData?._id]);
 
   const renderCards = Videos.map((video, index) => {
     let minutes = Math.floor(video.duration / 60);

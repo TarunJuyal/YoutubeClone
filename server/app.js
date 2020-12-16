@@ -12,6 +12,7 @@ const dir = path.join(__dirname,"../uploads");
 const subDirectory = path.join(__dirname,"../uploads/thumbnails");
 
 if (!fs.existsSync(dir)){
+    console.log("created upload and thumbs folder");
     fs.mkdirSync(dir);
     fs.mkdirSync(subDirectory)
 }

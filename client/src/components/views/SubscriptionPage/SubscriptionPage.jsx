@@ -3,13 +3,16 @@ import { Link } from "react-router-dom";
 import { Typography, Card, Avatar, Col, Row } from "antd";
 import Axios from "axios";
 import moment from "moment";
+import { useSelector } from "react-redux";
+
 
 const { Title } = Typography;
 const { Meta } = Card;
 
 function SubscriptionPage() {
+  const user=useSelector((state)=>state.user);
   const [Videos, setVideos] = useState([]);
-  const variable = { userFrom: localStorage.getItem("userId") };
+  const variable = { userFrom: user?.userData?._id };
   useEffect(() => {
     document.title = "Subscribed Videos";
     Axios.post("/api/video/getSubscriptionVideos", variable).then(
@@ -21,7 +24,7 @@ function SubscriptionPage() {
         }
       }
     );
-  }, [variable]);
+  }, [user?.userData?._id]);
 
   const renderCards = Videos.map((video, index) => {
     let minutes = Math.floor(video.duration / 60);
