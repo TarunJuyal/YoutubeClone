@@ -28,6 +28,7 @@ var upload = multer({
 
 videoRoutes.post("/uploadFile", (req, res) => {
   upload(req, res, (err) => {
+    console.log(err);
     if (err && err.wrongType) {
       return res.json({typeConflict:true,message:err.wrongType });
     }
