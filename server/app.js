@@ -28,7 +28,7 @@ app.use("/api/subscribe", require("./routes/subscribeRoutes"));
 app.use("/api/comment", require("./routes/commentRoutes"));
 app.use("/api/like", require("./routes/like"));
 
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads",express.static("../uploads"));
 
 
 const port = process.env.PORT;
