@@ -3,19 +3,9 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const path=require("path");
-const fs=require("fs");
 require("dotenv").config();
 
 const app = express();
-
-const dir = path.join(__dirname,"../uploads");
-const subDirectory = path.join(__dirname,"../uploads/thumbnails");
-
-if (!fs.existsSync(dir)){
-    console.log("created upload and thumbs folder");
-    fs.mkdirSync(dir);
-    fs.mkdirSync(subDirectory)
-}
 
 app.use(cors());
 app.use(bodyParser.json());

@@ -5,6 +5,7 @@ const { Like } = require("../models/like");
 const path = require("path");
 const multer = require("multer");
 const ffmpeg = require("fluent-ffmpeg");
+const fs=require("fs");
 const videoRoutes = express.Router();
 
 var storage = multer.diskStorage({
@@ -27,6 +28,13 @@ var upload = multer({
   },}).single("file");
 
 videoRoutes.post("/uploadFile", (req, res) => {
+  const dir = "../uploads"
+  const subDirectory = "../uploads/thumbnails"
+  if (!fs.existsSync(dir)){
+    console.log("created upload folder");
+    fs.mkdirSync(dir);
+    fs.mkdirSync(subDirectory)
+}
   upload(req, res, (err) => {
     console.log(err);
     if (err && err.wrongType) {

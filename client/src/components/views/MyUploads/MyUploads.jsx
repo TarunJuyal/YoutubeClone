@@ -27,7 +27,7 @@ const MyUploadsPage = () => {
     let minutes = Math.floor(video.duration / 60);
     let seconds = Math.floor(video.duration - minutes * 60);
     return (
-      <Col key={index}  lg={6} md={8} sm={12} xs={24} style={{marginBottom:"3vh"}}>
+      <Col key={index}  lg={6} md={8} xs={24} style={{marginBottom:"3vh"}}>
         <div style={{ position: "relative" }}>
           <Link to={`/video/${video._id}`}>
             <img
