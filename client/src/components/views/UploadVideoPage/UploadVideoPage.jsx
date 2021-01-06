@@ -4,6 +4,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import Dropzone from "react-dropzone";
 import { useSelector } from "react-redux";
 import Axios from "axios";
+import { Static_Content } from "../../config";
 
 const { Title } = Typography;
 const { TextArea } = Input;
@@ -138,7 +139,7 @@ function UploadVideoPage(props) {
           </Dropzone>
           {Thumbnail && (
             <div>
-              <img src={`http://localhost:5000/${Thumbnail}`} alt="Thumbnail" />
+              <img src={`${Static_Content}${Thumbnail}`} alt="Thumbnail" />
             </div>
           )}
         </div>

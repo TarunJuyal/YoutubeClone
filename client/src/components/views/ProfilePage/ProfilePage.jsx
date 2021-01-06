@@ -1,7 +1,7 @@
 import React, { useEffect,useState } from 'react';
 import {Card,Avatar,Col,Row,Typography,List } from "antd";
 import axios from "axios";
-import { USER_SERVER } from "../../config";
+import { USER_SERVER, Static_Content } from "../../config";
 import moment from "moment";
 import { Link } from "react-router-dom";
 import Subscriber from "../DetailVideoPage/Sections/Subscriber";
@@ -41,7 +41,7 @@ const ProfilePage = (props) => {
           <Link to={`/video/${video._id}`}>
             <img
               style={{ width: "100%" }}
-              src={`http://localhost:5000/${video.thumbnail}`}
+              src={`${Static_Content}${video.thumbnail}`}
               alt="thumbnail"
             ></img>
             <div

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Axios from "axios";
+import { Static_Content } from "../../../config";
 
 function SideVideo() {
   const [SideVideos, setSideVideos] = useState([]);
@@ -26,7 +27,7 @@ function SideVideo() {
           <a href={`/video/${video._id}`} style={{ color: "gray" }}>
             <img
               style={{ width: "100%" }}
-              src={`http://localhost:5000/${video.thumbnail}`}
+              src={`${Static_Content}${video.thumbnail}`}
               alt="thumbnail"
             ></img>
             <div

@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet";
 import Subscriber from "./Sections/Subscriber";
 import Comments from "./Sections/Comments";
 import LikeDislikes from "./Sections/LikeDislikes";
+import { Static_Content } from "../../config";
 
 const { Title } = Typography;
 
@@ -53,7 +54,7 @@ function DetailVideoPage(props) {
             >
               <video
                 style={{ width: "100%" }}
-                src={`http://localhost:5000/${Video.filePath}`}
+                src={`${Static_Content}${Video.filePath}`}
                 controls
                 autoPlay
                 loop

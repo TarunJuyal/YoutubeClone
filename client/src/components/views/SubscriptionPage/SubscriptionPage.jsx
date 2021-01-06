@@ -4,6 +4,7 @@ import { Typography, Card, Avatar, Col, Row } from "antd";
 import Axios from "axios";
 import moment from "moment";
 import { useSelector } from "react-redux";
+import { Static_Content } from "../../config";
 
 
 const { Title } = Typography;
@@ -35,7 +36,7 @@ function SubscriptionPage() {
           <Link to={`/video/${video._id}`}>
             <img
               style={{ width: "100%" }}
-              src={`http://localhost:5000/${video.thumbnail}`}
+              src={`${Static_Content}${video.thumbnail}`}
               alt="thumbnail"
             ></img>
             <div
