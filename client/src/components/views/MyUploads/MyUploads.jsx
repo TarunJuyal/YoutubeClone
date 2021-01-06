@@ -32,7 +32,7 @@ const MyUploadsPage = () => {
           <Link to={`/video/${video._id}`}>
             <img
               style={{ width: "100%" }}
-              src={`${Static_Content}/${video.thumbnail}`}
+              src={`${Static_Content}${video.thumbnail}`}
               alt="thumbnail"
             ></img>
             <div
