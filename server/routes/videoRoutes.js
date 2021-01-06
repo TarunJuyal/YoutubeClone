@@ -9,7 +9,7 @@ const videoRoutes = express.Router();
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "uploads/");
+    cb(null, "server/uploads/");
   },
   filename: function (req, file, cb) {
     cb(null, `${Date.now()}_${file.originalname}`);
@@ -53,7 +53,7 @@ videoRoutes.post("/thumbnail", (req, res) => {
 
   ffmpeg(req.body.filePath)
     .on("filenames", function (filenames) {
-      thumbsFilePath = "uploads/thumbnails/" + filenames[1];
+      thumbsFilePath = "server/uploads/thumbnails/" + filenames[1];
     })
     .on("end", function () {
       return res.json({
@@ -64,7 +64,7 @@ videoRoutes.post("/thumbnail", (req, res) => {
     })
     .screenshots({
       count: 3,
-      folder: "uploads/thumbnails",
+      folder: path.resolve(__dirname,"../uploads/thumbnails"),
       size: "320x240",
       filename: "thumbnail-%b.png",
     });

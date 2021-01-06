@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { Typography, List, Avatar, Row, Col } from "antd";
 import Axios from "axios";
-import SideVideo from "./Sections/SideVideo";
 import { Helmet } from "react-helmet";
-import Subscriber from "./Sections/Subscriber";
-import Comments from "./Sections/Comments";
-import LikeDislikes from "./Sections/LikeDislikes";
 import { Static_Content } from "../../config";
+import { LoadingOutlined } from "@ant-design/icons";
+
+const SideVideo = React.lazy(()=>import("./Sections/SideVideo"));
+const Subscriber = React.lazy(()=>import("./Sections/Subscriber"));
+const Comments = React.lazy(()=>import("./Sections/Comments"));
+const LikeDislikes = React.lazy(()=>import("./Sections/LikeDislikes"));
 
 const { Title } = Typography;
 
@@ -43,7 +45,8 @@ function DetailVideoPage(props) {
   if (Video.writer) {
     return (
       <React.Fragment>
-        <Helmet>
+        <Suspense fallback={<div className="app"><LoadingOutlined style={{ fontSize: "4rem" }} /></div>}>
+            <Helmet>
           <title>{Video.title}</title>
         </Helmet>
         <Row>
@@ -108,10 +111,11 @@ function DetailVideoPage(props) {
             <SideVideo />
           </Col>
         </Row>
+        </Suspense>
       </React.Fragment>
     );
   } else {
-    return <div></div>;
+    return <div className="app"><LoadingOutlined style={{ fontSize: "4rem" }} /></div>;
   }
 }
 

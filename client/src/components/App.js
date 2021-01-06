@@ -1,26 +1,28 @@
 import React, { Suspense } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import Auth from "../hoc/auth";
+import { LoadingOutlined } from "@ant-design/icons";
 
-import LandingPage from "./views/LandingPage/LandingPage";
-import LoginPage from "./views/LoginPage/LoginPage";
-import RegisterPage from "./views/RegisterPage/RegisterPage";
-import NavBar from "./views/NavBar/NavBar";
-import UploadVideoPage from "./views/UploadVideoPage/UploadVideoPage";
-import DetailVideoPage from "./views/DetailVideoPage/DetailVideoPage";
-import SubscriptionPage from "./views/SubscriptionPage/SubscriptionPage";
-import CategoryPage from "./views/CategoryPage/CategoryPage";
-import SearchPage from "./views/SearchPage/SearchPage";
-import LikedVideosPage from "./views/LikedVideosPage/LikedVideosPage";
-import NotFoundPage from "./views/NotFoundPage/NotFoundPage";
-import ProfilePage from "./views/ProfilePage/ProfilePage";
-import RequestPasswordChangePage from "./views/ChangePasswordPage/RequestPasswordChangePage";
-import ResetPasswordPage from "./views/ChangePasswordPage/ResetPasswordPage";
-import MyUploadsPage from "./views/MyUploads/MyUploads";
+
+const LandingPage = React.lazy(()=>import("./views/LandingPage/LandingPage"));
+const LoginPage = React.lazy(()=>import("./views/LoginPage/LoginPage"));
+const RegisterPage = React.lazy(()=>import("./views/RegisterPage/RegisterPage"));
+const NavBar = React.lazy(()=>import("./views/NavBar/NavBar"));
+const UploadVideoPage = React.lazy(()=>import("./views/UploadVideoPage/UploadVideoPage"));
+const DetailVideoPage = React.lazy(()=>import("./views/DetailVideoPage/DetailVideoPage"));
+const SubscriptionPage = React.lazy(()=>import("./views/SubscriptionPage/SubscriptionPage"));
+const CategoryPage = React.lazy(()=>import("./views/CategoryPage/CategoryPage"));
+const SearchPage = React.lazy(()=>import("./views/SearchPage/SearchPage"));
+const LikedVideosPage = React.lazy(()=>import("./views/LikedVideosPage/LikedVideosPage"));
+const NotFoundPage = React.lazy(()=>import("./views/NotFoundPage/NotFoundPage"));
+const ProfilePage = React.lazy(()=>import("./views/ProfilePage/ProfilePage"));
+const RequestPasswordChangePage = React.lazy(()=>import("./views/ChangePasswordPage/RequestPasswordChangePage"));
+const ResetPasswordPage = React.lazy(()=>import("./views/ChangePasswordPage/ResetPasswordPage"));
+const MyUploadsPage = React.lazy(()=>import("./views/MyUploads/MyUploads"));
 
 function App() {
   return (
-    <Suspense fallback={<div>Loading.... </div>}>
+    <Suspense fallback={<div className="app"><LoadingOutlined style={{ fontSize: "4rem" }} /></div>}>
       <NavBar />
       <div style={{ paddingTop: "69px", minHeight: "calc(100vh - 80px)" }}>
         <Switch>

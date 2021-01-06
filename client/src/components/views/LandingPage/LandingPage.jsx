@@ -12,7 +12,7 @@ function LandingPage() {
   const [Videos, setVideos] = useState([]);
 
   useEffect(() => {
-    document.title = "My Tube";
+    document.title = "My Video Streamer";
     Axios.get("/api/video/getVideos").then((response) => {
       if (response.data.success) {
         setVideos(response.data.videos);
